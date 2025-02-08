@@ -9,17 +9,17 @@
 
 void ler_arquivo(const char *nomearq){
     FILE *fp; 
-    char linha[20];
+    char linha[14];
     char **instrucao = NULL;
     char **endereco = NULL;
     int cl = 0;
     fp = fopen(nomearq, "r");
-    while (fgets(linha, 20, fp) != NULL){
+    while (fgets(linha, 14, fp) != NULL){
         linha[strcspn(linha, "\n")] = '\0';
         endereco = realloc (endereco, (cl + 1) * sizeof (char*));
         instrucao = realloc (instrucao, (cl + 1) * sizeof (char*));
-        endereco[cl] = malloc ((5 + 1)*sizeof(char));
-        instrucao[cl] = malloc ((5 + 1)*sizeof(char));
+        endereco[cl] = malloc ((4 + 1)*sizeof(char));
+        instrucao[cl] = malloc ((4 + 1)*sizeof(char));
         strncpy(endereco[cl], linha, 4);
         endereco[cl][4] = '\0';
         strncpy(instrucao[cl], linha + 8, 4);
