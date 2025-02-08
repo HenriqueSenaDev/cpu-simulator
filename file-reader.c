@@ -2,37 +2,38 @@
 // File to read: "text.txt"
 
 // References: https://www.youtube.com/watch?v=DqY_PGlMihM
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "file-reader.h"
 
-void ler_arquivo(const char *nomearq){
+void ler_arquivo(const char *nomearq, char ***enderecos, char ***instrucoes, int *quantidade) {
     FILE *fp; 
-    char linha[14];
-    char **instrucao = NULL;
-    char **endereco = NULL;
+    char linha[20];
     int cl = 0;
+    *enderecos = NULL;
+    *instrucoes = NULL;
+
     fp = fopen(nomearq, "r");
-    while (fgets(linha, 14, fp) != NULL){
+    if (fp == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return;
+    }
+
+    while (fgets(linha, sizeof(linha), fp) != NULL) {
         linha[strcspn(linha, "\n")] = '\0';
-        endereco = realloc (endereco, (cl + 1) * sizeof (char*));
-        instrucao = realloc (instrucao, (cl + 1) * sizeof (char*));
-        endereco[cl] = malloc ((4 + 1)*sizeof(char));
-        instrucao[cl] = malloc ((4 + 1)*sizeof(char));
-        strncpy(endereco[cl], linha, 4);
-        endereco[cl][4] = '\0';
-        strncpy(instrucao[cl], linha + 8, 4);
-        instrucao[cl][4] = '\0';
+        *enderecos = realloc(*enderecos, (cl + 1) * sizeof(char*));
+        *instrucoes = realloc(*instrucoes, (cl + 1) * sizeof(char*));
+        (*enderecos)[cl] = malloc(5 * sizeof(char));
+        (*instrucoes)[cl] = malloc(5 * sizeof(char));
+        strncpy((*enderecos)[cl], linha, 4);
+        (*enderecos)[cl][4] = '\0';
+        strncpy((*instrucoes)[cl], linha + 8, 4);
+        (*instrucoes)[cl][4] = '\0';
         cl++;
     }
     fclose(fp);
-    for(int i = 0; i < cl; i++){
-        printf("%s\n", endereco[i]);
-    }
-    for(int i = 0; i < cl; i++){
-        printf("%s\n", instrucao[i]);
-    }
-    
-
+    *quantidade = cl;
 }
+
