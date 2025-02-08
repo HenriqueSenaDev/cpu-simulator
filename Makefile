@@ -3,7 +3,7 @@ CC = gcc # Compiler to use
 CFLAGS = -Wall -Wextra -std=c11 # Compiler flags
 
 # Source files to be compiled
-SRC = main.c file-reader.c
+SRC := $(wildcard *.c)
 
 # Build
 BUILD_DIR = ./build
