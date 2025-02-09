@@ -3,11 +3,16 @@ CC = gcc # Compiler to use
 CFLAGS = -Wall -Wextra -std=c11 # Compiler flags
 
 # Source files to be compiled
-SRC := $(wildcard *.c)
+# SRC := $(wildcard *.c)
+SRC := $(shell find src -type f -name "*.c")
+
+$(info $(SRC))
 
 # Build
 BUILD_DIR = ./build
 OBJ = $(SRC:%.c=$(BUILD_DIR)/%.o) # Compiled files generated in BUILD_DIR
+
+$(info $(OBJ))
 
 # Output
 OUTPUT_DIR = ./output
@@ -28,6 +33,7 @@ create-dirs:
 
 # Compile all "*.c" files in "*.o" files.
 $(BUILD_DIR)/%.o: %.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Deletes $(BUILD_DIR) $(OUTPUT_DIR) directories.
