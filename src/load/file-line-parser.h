@@ -1,8 +1,9 @@
+#include "../core/cpu-context.h"
 #ifndef FILE_LINE_PARSER_H
 #define FILE_LINE_PARSER_H
 
 int hexadecimal_para_inteiro(const char *hex_str);
-void divisao_enderecos_instrucoes(char **linhas, int nlinhas, char ***endereco, char ***instrucao);
-void processar_instrucoes(char **endereco, char **instrucao, int quantidade);
+
+void popular_memoria_programa(CPUContext *cpuCtx, char **linhas, int nLinhas);
 
 #endif
