@@ -24,4 +24,8 @@ void popular_memoria_programa(CPUContext *cpuCtx, char **linhas, int nLinhas) {
         uint8_t valor = (uint8_t) hexadecimal_para_inteiro(valorstr);
         cpuCtx->programMem[endereco] = valor;
     }
+    for(int i = 0; i < MEMORY_RANGE; i++) {
+        if(cpuCtx->programMem[i] != 0)
+        printf("Memória[%d] = %d\n", i, cpuCtx->programMem[i]);
+    }
 }
