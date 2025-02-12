@@ -14,10 +14,12 @@ typedef struct cpu_context
     // 65536x8 data memory.
     uint8_t dataMem[MEMORY_RANGE];
 
-    uint8_t registers[NUM_REGISTERS][REGISTER_SIZE];
-    // Flags (1 inteiro, 32 bits, onde cada bit pode representar um flag).
-    uint32_t flags;
+    uint16_t registers[NUM_REGISTERS];
 
+    uint8_t carry;
+    uint8_t overflow;
+    uint8_t zero;
+    uint8_t signal;
 } CPUContext;
 
 CPUContext *initCPU();
