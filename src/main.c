@@ -9,7 +9,7 @@ int main()
     printf("Hello CPU Simulator!\n");
 
     int linesQuantity;
-    char **readLines = ler_arquivo("test.txt", &linesQuantity);
+    char **readLines = ler_arquivo("./src/test.txt", &linesQuantity);
 
     printf("%d instruções lidas.\n", linesQuantity);
 
@@ -17,9 +17,8 @@ int main()
     printf("CPU initialized.\n");
 
     popular_memoria_programa(cpuCtx, readLines, linesQuantity);
+    liberar_linhas_lidas(readLines, linesQuantity);
 
     cleanCPU(cpuCtx);
-    printf("CPU memory freed.\n");
-
     return 0;
 }
