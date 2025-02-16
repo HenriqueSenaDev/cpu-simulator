@@ -6,19 +6,17 @@
 
 int main()
 {
-    printf("Hello CPU Simulator!\n");
-
     int linesQuantity;
     char **readLines = ler_arquivo("./src/test.txt", &linesQuantity);
-
     printf("%d instruções lidas.\n", linesQuantity);
 
+    // CPU state initialization.
     CPUContext *cpuCtx = initCPU();
-    printf("CPU initialized.\n");
 
     popular_memoria_programa(cpuCtx, readLines, linesQuantity);
-    liberar_linhas_lidas(readLines, linesQuantity);
 
+    // Memory freed.
+    liberar_linhas_lidas(readLines, linesQuantity);
     cleanCPU(cpuCtx);
     return 0;
 }

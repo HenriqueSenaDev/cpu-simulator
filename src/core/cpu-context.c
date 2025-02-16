@@ -19,5 +19,4 @@ CPUContext *initCPU()
 void cleanCPU(CPUContext *cpuCtx)
 {
     free(cpuCtx);
-    printf("CPU memory freed.\n");
 }
