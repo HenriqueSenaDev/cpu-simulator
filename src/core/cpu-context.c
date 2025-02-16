@@ -20,3 +20,22 @@ void cleanCPU(CPUContext *cpuCtx)
 {
     free(cpuCtx);
 }
+
+void printCPUState(CPUContext *cpuCtx)
+{
+    printf("------------ CPU State ------------\n");
+
+    // Program memory
+    for (int i = 0; i < MEMORY_RANGE; i++)
+    {
+        if (cpuCtx->usedProgramMem[i])
+            printf("Memória[%d] = %02x\n", i, cpuCtx->programMem[i]);
+    }
+
+    // TODO: Data memory
+    // TODO: Generic registers
+    // TODO: Specific registers
+    // TODO: Flags
+
+    printf("-----------------------------------\n");
+}

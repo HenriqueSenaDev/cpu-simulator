@@ -26,6 +26,9 @@ typedef struct cpu_context
 } CPUContext;
 
 CPUContext *initCPU();
+
 void cleanCPU(CPUContext *cpuCtx);
+
+void printCPUState(CPUContext *cpuCtx);
 
 #endif

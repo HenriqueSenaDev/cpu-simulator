@@ -16,6 +16,8 @@ int main()
     CPUContext *cpuCtx = initCPU();
     popular_memoria_programa(cpuCtx, readLines, linesQuantity);
 
+    printCPUState(cpuCtx);
+
     // Memory freed
     liberar_linhas_lidas(readLines, linesQuantity);
     cleanCPU(cpuCtx);
