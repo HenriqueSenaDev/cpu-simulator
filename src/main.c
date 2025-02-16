@@ -6,16 +6,17 @@
 
 int main()
 {
+    // File reading
     int linesQuantity;
+    printf("Reading file './src/test.txt'...\n");
     char **readLines = ler_arquivo("./src/test.txt", &linesQuantity);
     printf("%d instruções lidas.\n", linesQuantity);
 
-    // CPU state initialization.
+    // CPU initialization
     CPUContext *cpuCtx = initCPU();
-
     popular_memoria_programa(cpuCtx, readLines, linesQuantity);
 
-    // Memory freed.
+    // Memory freed
     liberar_linhas_lidas(readLines, linesQuantity);
     cleanCPU(cpuCtx);
     return 0;

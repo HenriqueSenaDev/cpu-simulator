@@ -12,11 +12,16 @@ char **ler_arquivo(const char *nomearq, int *nlinhas)
 
     while (fgets(lelinha, 14, fp) != NULL)
     {
+        // Substitue quebra de linha pelo terminador de string.
         lelinha[strcspn(lelinha, "\n")] = '\0';
+
+        // Aloca mais uma posição vetor.
         linhas = realloc(linhas, (cl + 1) * sizeof(char *));
 
+        // Aloca memória na posição adicionada.
         linhas[cl] = malloc((strlen(lelinha) + 1) * sizeof(char));
 
+        // Insere a linha na memória alocada.
         strcpy(linhas[cl], lelinha);
 
         cl++;
