@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdbool.h>
 #ifndef CPU_CONTEXT_H
 #define CPU_CONTEXT_H
 
@@ -11,6 +12,8 @@ typedef struct cpu_context
 {
     // 65536x8 program memory.
     uint8_t programMem[MEMORY_RANGE];
+    bool usedProgramMem[MEMORY_RANGE];
+
     // 65536x8 data memory.
     uint8_t dataMem[MEMORY_RANGE];
 
