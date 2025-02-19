@@ -29,6 +29,6 @@ CPUContext *initCPU();
 
 void cleanCPU(CPUContext *cpuCtx);
 
-void printCPUState(CPUContext *cpuCtx);
+void printProgramMem(CPUContext *cpuCtx);
 
 #endif
