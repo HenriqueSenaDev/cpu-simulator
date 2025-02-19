@@ -44,6 +44,19 @@ void printProgramMem(CPUContext *cpuCtxPtr)
                 cpuCtxPtr->programMem[i]);
         }
     }
+}
 
-    printf("-----------------------------------\n");
+void startExecution(CPUContext *cpuCtxPtr)
+{
+    printf("------- Start Execution -------\n");
+    endExecution(cpuCtxPtr);
+}
+
+void endExecution(CPUContext *cpuCtxPtr)
+{
+    printf("-------- End Execution --------\n");
+    cleanCPU(cpuCtxPtr);
+    printf("CPU memory freed.\n");
+    printf("TODO: print cpu state.\n");
+    exit(0);
 }

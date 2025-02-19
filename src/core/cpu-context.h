@@ -40,4 +40,8 @@ void cleanCPU(CPUContext *cpuCtx);
 
 void printProgramMem(CPUContext *cpuCtx);
 
+void startExecution(CPUContext *cpuCtx);
+
+void endExecution(CPUContext *cpuCtx);
+
 #endif

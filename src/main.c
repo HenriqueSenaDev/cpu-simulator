@@ -8,18 +8,16 @@ int main()
 {
     // File reading
     int linesQuantity;
-    printf("Reading file './src/test.txt'...\n");
     char **readLines = ler_arquivo("./src/test.txt", &linesQuantity);
     printf("%d instructions found.\n", linesQuantity);
 
     // CPU initialization
     CPUContext *cpuCtx = initCPU();
     popular_memoria_programa(cpuCtx, readLines, linesQuantity);
-
+    liberar_linhas_lidas(readLines, linesQuantity);
     printProgramMem(cpuCtx);
 
-    // Memory freed
-    liberar_linhas_lidas(readLines, linesQuantity);
-    cleanCPU(cpuCtx);
+    // Instructions execution.
+    startExecution(cpuCtx);
     return 0;
 }
