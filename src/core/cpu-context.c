@@ -5,35 +5,43 @@
 
 CPUContext *initCPU()
 {
-    CPUContext *cpuCtx = (CPUContext *)calloc(1, sizeof(CPUContext));
+    CPUContext *cpuCtxPtr = (CPUContext *)calloc(1, sizeof(CPUContext));
 
-    memset(cpuCtx->registers, 0, sizeof(cpuCtx->registers));
-    cpuCtx->carry = 0;
-    cpuCtx->overflow = 0;
-    cpuCtx->zero = 0;
-    cpuCtx->signal = 0;
+    // Generic registers initialization.
+    memset(cpuCtxPtr->registers, 0, sizeof(cpuCtxPtr->registers));
 
-    return cpuCtx;
+    // Specific registers initialization.
+    cpuCtxPtr->ir = 0;
+    cpuCtxPtr->pc = 0;
+    cpuCtxPtr->sp = 0x8200; // Initial SP addr.
+
+    // Flags initialization.
+    cpuCtxPtr->carry = 0;
+    cpuCtxPtr->overflow = 0;
+    cpuCtxPtr->zero = 0;
+    cpuCtxPtr->signal = 0;
+
+    return cpuCtxPtr;
 }
 
-void cleanCPU(CPUContext *cpuCtx)
+void cleanCPU(CPUContext *cpuCtxPtr)
 {
-    free(cpuCtx);
+    free(cpuCtxPtr);
 }
 
-void printProgramMem(CPUContext *cpuCtx)
+void printProgramMem(CPUContext *cpuCtxPtr)
 {
     printf("----------- Program Memory -----------\n");
 
     for (int i = 0; i < MEMORY_RANGE; i++)
     {
-        if (cpuCtx->usedProgramMem[i])
+        if (cpuCtxPtr->usedProgramMem[i])
         {
             printf(
                 "Addr[0x%04x] = 0x%02x = %d\n",
                 i,
-                cpuCtx->programMem[i],
-                cpuCtx->programMem[i]);
+                cpuCtxPtr->programMem[i],
+                cpuCtxPtr->programMem[i]);
         }
     }
 

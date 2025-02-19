@@ -15,10 +15,19 @@ typedef struct cpu_context
     bool usedProgramMem[MEMORY_RANGE];
 
     // 65536x8 data memory.
+    // TODO: handle stack range (16 bytes from 0x8200).
     uint8_t dataMem[MEMORY_RANGE];
+    bool usedDataMem[MEMORY_RANGE];
 
+    // Generic registers.
     uint16_t registers[NUM_REGISTERS];
 
+    // Specific registers.
+    uint16_t ir;
+    uint16_t sp;
+    uint16_t pc;
+
+    // Flags
     uint8_t carry;
     uint8_t overflow;
     uint8_t zero;
