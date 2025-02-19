@@ -20,9 +20,9 @@ void popular_memoria_programa(CPUContext *cpuCtx, char **linhas, int nLinhas)
 
         strncpy(enderecostr, linhas[i], 4);
         enderecostr[4] = '\0';
-        strncpy(valorstr1, linhas[i] + 10, 2);
+        strncpy(valorstr1, linhas[i] + 9, 2);
         valorstr1[2] = '\0';
-        strncpy(valorstr2, linhas[i] + 8, 2);
+        strncpy(valorstr2, linhas[i] + 7, 2);
         valorstr2[2] = '\0';
 
         // Address
@@ -32,6 +32,12 @@ void popular_memoria_programa(CPUContext *cpuCtx, char **linhas, int nLinhas)
         uint8_t lsbByte = (uint8_t)hexadecimal_para_inteiro(valorstr1);
         // (Most Significant Bit) byte
         uint8_t msbByte = (uint8_t)hexadecimal_para_inteiro(valorstr2);
+
+        // Lines below print each line explanation.
+        // printf("Address str %s para numero %d\n", enderecostr, endereco);
+        // printf("String %s para numero %d\n", valorstr1, lsbByte);
+        // printf("String %s para numero %d\n", valorstr2, msbByte);
+        // printf("\n");
 
         cpuCtx->programMem[endereco] = lsbByte;
         cpuCtx->programMem[endereco + 1] = msbByte;

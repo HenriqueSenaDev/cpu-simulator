@@ -3,47 +3,72 @@
 #include <string.h>
 #include "file-reader.h"
 
-char **ler_arquivo(const char *nomearq, int *nlinhas)
+void remove_spaces(char *s)
+{
+    char *d = s;
+    do
+    {
+        while (*d == ' ')
+        {
+            ++d;
+        }
+    } while (*s++ = *d++);
+}
+
+char **ler_arquivo(const char *nomearq, int *nlines)
 {
     FILE *fp = fopen(nomearq, "r");
-    char lelinha[14];
-    char **linhas = NULL;
-    int cl = 0;
 
-    while (fgets(lelinha, 14, fp) != NULL)
+    if (fp == NULL)
     {
-        // Substitue quebra de linha pelo terminador de string.
-        lelinha[strcspn(lelinha, "\n")] = '\0';
+        printf("Erro ao abrir arquivo \"%s\".", nomearq);
+        return NULL;
+    }
 
-        // Aloca mais uma posição vetor.
-        linhas = realloc(linhas, (cl + 1) * sizeof(char *));
+    char readLine[14];
+    char **lines = NULL;
 
+    int count = 0;
+
+    while (fgets(readLine, 14, fp) != NULL)
+    {
+        remove_spaces(readLine);
+
+        // Linha no formato "####:0x####".
+        char formattedLine[12];
+
+        // Copia excluindo a quebra de linha.
+        strncpy(formattedLine, readLine, 11);
+        // Insere o terminador de string.
+        formattedLine[11] = '\0';
+
+        // Aloca mais uma posição no vetor.
+        lines = realloc(lines, (count + 1) * sizeof(char *));
         // Aloca memória na posição adicionada.
-        linhas[cl] = malloc((strlen(lelinha) + 1) * sizeof(char));
+        lines[count] = malloc(12 * sizeof(char));
 
         // Insere a linha na memória alocada.
-        strcpy(linhas[cl], lelinha);
-
-        cl++;
+        strcpy(lines[count], formattedLine);
+        count++;
     }
 
     fclose(fp);
 
-    for (int i = 0; i < cl; i++)
+    for (int i = 0; i < count; i++)
     {
-        printf("%s\n", linhas[i]);
+        printf("%s\n", lines[i]);
     }
 
-    *nlinhas = cl;
-    return linhas;
+    *nlines = count;
+    return lines;
 }
 
-void liberar_linhas_lidas(char **linhasLidas, int nLinhas)
+void liberar_linhas_lidas(char **readLines, int nlines)
 {
-    for (int i = 0; i < nLinhas; i++)
+    for (int i = 0; i < nlines; i++)
     {
-        free(linhasLidas[i]);
+        free(readLines[i]);
     }
 
-    free(linhasLidas);
+    free(readLines);
 }
