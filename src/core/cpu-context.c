@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "cpu-context.h"
 #include <string.h>
+#include "cpu-context.h"
+#include "../decode/decoder.h"
 
 CPUContext *initCPU()
 {
@@ -41,39 +42,47 @@ void printProgramMem(CPUContext *cpuCtxPtr)
     }
 }
 
+uint8_t *nextInstructionBits(CPUContext *cpuCtxPtr)
+{
+    uint8_t *instructionBits = (uint8_t *)calloc(16, sizeof(uint8_t));
+
+    if (instructionBits == NULL)
+    {
+        perror("Error on alocate memory for instruction.");
+        exit(1);
+    }
+
+    uint8_t instructionLsb = cpuCtxPtr->programMem[cpuCtxPtr->pc];
+    uint8_t instructionMsb = cpuCtxPtr->programMem[cpuCtxPtr->pc + 1];
+
+    for (int i = 0; i < 8; i++)
+    {
+        uint8_t lsbBit = instructionLsb % 2; // 0 or 1
+        instructionBits[15 - i] = lsbBit;
+
+        uint8_t msbBit = instructionMsb % 2; // 0 or 1
+        instructionBits[7 - i] = msbBit;
+
+        instructionLsb = instructionLsb >> 1;
+        instructionMsb = instructionMsb >> 1;
+    }
+
+    return instructionBits;
+}
+
 void startExecution(CPUContext *cpuCtxPtr)
 {
     printf("------- Start Execution -------\n");
 
     while (cpuCtxPtr->usedProgramMem[cpuCtxPtr->pc])
     {
-        uint8_t *instruction = (uint8_t *)calloc(16, sizeof(uint8_t));
+        uint8_t *instructionBits = nextInstructionBits(cpuCtxPtr);
 
-        if (instruction == NULL)
-        {
-            perror("Error on alocate memory for instruction.");
-            exit(1);
-        }
+        printf("Istr: ");
 
-        uint8_t instructionLsb = cpuCtxPtr->programMem[cpuCtxPtr->pc];
-        uint8_t instructionMsb = cpuCtxPtr->programMem[cpuCtxPtr->pc + 1];
-
-        for (int i = 0; i < 8; i++)
-        {
-            uint8_t lsbBit = instructionLsb % 2; // 0 or 1
-            instruction[15 - i] = lsbBit;
-
-            uint8_t msbBit = instructionMsb % 2; // 0 or 1
-            instruction[7 - i] = msbBit;
-
-            instructionLsb = instructionLsb >> 1;
-            instructionMsb = instructionMsb >> 1;
-        }
-
-        printf("Instruction of address %d = ", cpuCtxPtr->pc);
         for (int i = 0; i < 16; i++)
         {
-            printf("%d", instruction[i]);
+            printf("%d", instructionBits[i]);
             if (i == 7)
                 printf(" ");
         }
