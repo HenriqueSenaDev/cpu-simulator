@@ -33,7 +33,7 @@ void popular_memoria_programa(CPUContext *cpuCtx, char **linhas, int nLinhas)
         // (Most Significant Bit) byte
         uint8_t msbByte = (uint8_t)hexadecimal_para_inteiro(valorstr2);
 
-        // Lines below print each line explanation.
+        // Lines below print verbose explanation.
         // printf("Address str %s para numero %d\n", enderecostr, endereco);
         // printf("String %s para numero %d\n", valorstr1, lsbByte);
         // printf("String %s para numero %d\n", valorstr2, msbByte);

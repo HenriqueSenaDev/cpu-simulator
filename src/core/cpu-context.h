@@ -36,8 +36,6 @@ typedef struct cpu_context
 
 CPUContext *initCPU();
 
-void cleanCPU(CPUContext *cpuCtx);
-
 void printProgramMem(CPUContext *cpuCtx);
 
 void startExecution(CPUContext *cpuCtx);
