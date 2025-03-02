@@ -4,7 +4,7 @@
 #include <math.h>
 #include "cpu-context.h"
 #include "../utils/numeric.h"
-// #include "../decode/decoder.h"
+#include "../decode/decoder.h"
 
 CPUContext *initCPU()
 {
@@ -83,7 +83,7 @@ void startExecution(CPUContext *cpuCtxPtr)
         cpuCtxPtr->ir = *instruction;
         cpuCtxPtr->pc += 2;
 
-        // decodeAndExecute(cpuCtxPtr);
+        decodeAndExecute(cpuCtxPtr);
     }
 
     endExecution(cpuCtxPtr);
