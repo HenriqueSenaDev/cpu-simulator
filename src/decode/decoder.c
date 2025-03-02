@@ -23,6 +23,7 @@
 #include "../instructions/jlt/jlt.h"
 #include "../instructions/jgt/jgt.h"
 #include "../instructions/shr/shr.h"
+#include "../instructions/shl/shl.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -166,7 +167,11 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   // SHL
   else if (*opCode == 12)
-    return printf("SHL\n");
+  {
+    uint8_t *immediate = binaryToDecimal(bitsArr, 11, 15);
+    return SHL(cpuCtxPtr, rd, rm, *immediate);
+  }
+
   // ROR
   else if (*opCode == 13)
     return printf("ROR\n");
