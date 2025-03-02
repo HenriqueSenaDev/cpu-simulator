@@ -15,6 +15,7 @@
 #include "../instructions/orr/orr.h"
 #include "../instructions/not/not.h"
 #include "../instructions/xor/xor.h"
+#include "../instructions/psh/psh.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -58,7 +59,8 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
     else
     {
       if (*aux == 1)
-        return printf("PSH\n");
+        return PSH(cpuCtxPtr, rn);
+
       if (*aux == 2)
         return printf("POP\n");
       if (*aux == 3)
@@ -139,6 +141,7 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
   // SHR
   else if (*opCode == 11)
     return printf("SHR\n");
+
   // SHL
   else if (*opCode == 12)
     return printf("SHL\n");
