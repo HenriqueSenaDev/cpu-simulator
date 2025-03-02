@@ -12,6 +12,7 @@
 #include "../instructions/sub/sub.h"
 #include "../instructions/mul/mul.h"
 #include "../instructions/and/and.h"
+#include "../instructions/orr/orr.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -123,7 +124,8 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   // ORR
   else if (*opCode == 8)
-    return printf("ORR\n");
+    return ORR(cpuCtxPtr, rd, rm, rn);
+
   // NOT
   else if (*opCode == 9)
     return printf("NOT\n");
