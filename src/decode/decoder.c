@@ -6,8 +6,8 @@
 #include "../instructions/nop/nop.h"
 #include "../instructions/halt/halt.h"
 #include "../instructions/mov/mov.h"
+#include "../instructions/str/str.h"
 
-// Receives 16 bits array
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
   uint16_t instruction = cpuCtxPtr->ir;
@@ -17,6 +17,10 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   uint8_t *opCode = binaryToDecimal(bitsArr, 0, 3);
   uint8_t variation = bitsArr[4];
+
+  // Debugs
+  // printf("OPCODE %d | ", *opCode);
+  // printf("Variation %d | ", variation);
 
   if (instruction == 0)
     return NOP(cpuCtxPtr);
@@ -49,8 +53,9 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
         return printf("CMP\n");
     }
   }
+
   // MOV variations
-  else if (*opCode == 1)
+  if (*opCode == 1)
   {
     uint8_t *rd = binaryToDecimal(bitsArr, 5, 7);
 
@@ -65,14 +70,34 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
     uint8_t *rm = binaryToDecimal(bitsArr, 8, 10);
     return MOV(cpuCtxPtr, *rd, *rm);
   }
+
   // STR variations
-  else if (*opCode == 2)
+  if (*opCode == 2)
   {
+    uint8_t *rm = binaryToDecimal(bitsArr, 8, 10);
+    uint8_t *rn = binaryToDecimal(bitsArr, 11, 13);
+
+    // STR Rm = #Im
     if (variation)
-      return printf("STR [Rm] = Rn\n");
-    else
-      return printf("STR [Rm] = #Im\n");
+    {
+      uint8_t immediateBits[8] = {
+          bitsArr[5],
+          bitsArr[6],
+          bitsArr[7],
+          bitsArr[11],
+          bitsArr[12],
+          bitsArr[13],
+          bitsArr[14],
+          bitsArr[15]};
+
+      uint8_t *immediate = binaryToDecimal(immediateBits, 0, 7);
+      return STR_IM(cpuCtxPtr, *rm, *immediate);
+    }
+
+    // STR Rm = Rn
+    return STR(cpuCtxPtr, *rm, *rn);
   }
+
   // LDR
   else if (*opCode == 3)
     return printf("LDR\n");
