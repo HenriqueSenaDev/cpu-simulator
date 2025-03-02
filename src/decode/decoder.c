@@ -13,6 +13,7 @@
 #include "../instructions/mul/mul.h"
 #include "../instructions/and/and.h"
 #include "../instructions/orr/orr.h"
+#include "../instructions/not/not.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -128,7 +129,8 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   // NOT
   else if (*opCode == 9)
-    return printf("NOT\n");
+    return NOT(cpuCtxPtr, rd, rm);
+
   // XOR
   else if (*opCode == 10)
     return printf("XOR\n");
