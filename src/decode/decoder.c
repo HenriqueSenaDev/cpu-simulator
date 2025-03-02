@@ -9,6 +9,7 @@
 #include "../instructions/str/str.h"
 #include "../instructions/ldr/ldr.h"
 #include "../instructions/add/add.h"
+#include "../instructions/sub/sub.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -121,7 +122,14 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   // SUB
   else if (*opCode == 5)
-    return printf("SUB\n");
+  {
+    uint8_t *rd = binaryToDecimal(bitsArr, 5, 7);
+    uint8_t *rm = binaryToDecimal(bitsArr, 8, 10);
+    uint8_t *rn = binaryToDecimal(bitsArr, 11, 13);
+
+    return SUB(cpuCtxPtr, *rd, *rm, *rn);
+  }
+
   // MUL
   else if (*opCode == 6)
     return printf("MUL\n");
