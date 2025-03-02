@@ -24,6 +24,7 @@
 #include "../instructions/jgt/jgt.h"
 #include "../instructions/shr/shr.h"
 #include "../instructions/shl/shl.h"
+#include "../instructions/ror/ror.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -174,7 +175,8 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   // ROR
   else if (*opCode == 13)
-    return printf("ROR\n");
+    return ROR(cpuCtxPtr, rd, rm);
+
   // ROL
   else if (*opCode == 14)
     return printf("ROL\n");
