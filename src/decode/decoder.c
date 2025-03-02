@@ -21,6 +21,7 @@
 #include "../instructions/jmp/jmp.h"
 #include "../instructions/jeq/jeq.h"
 #include "../instructions/jlt/jlt.h"
+#include "../instructions/jgt/jgt.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -69,7 +70,7 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
       // LGT
       if (*aux == 3)
-        return printf("JGT\n");
+        return JGT(cpuCtxPtr, *immediate);
     }
 
     // PSH
