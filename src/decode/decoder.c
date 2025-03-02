@@ -19,6 +19,7 @@
 #include "../instructions/pop/pop.h"
 #include "../instructions/cmp/cmp.h"
 #include "../instructions/jmp/jmp.h"
+#include "../instructions/jeq/jeq.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -48,16 +49,19 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
   {
     uint8_t *aux = binaryToDecimal(bitsArr, 14, 15);
 
+    // JUMPS
     if (variation)
     {
-      if (*aux == 0)
-      {
-        uint16_t *immediate = binaryToDecimal(bitsArr, 5, 13);
-        return JMP(cpuCtxPtr, *immediate);
-      }
+      uint16_t *immediate = binaryToDecimal(bitsArr, 5, 13);
 
+      // JMP
+      if (*aux == 0)
+        return JMP(cpuCtxPtr, *immediate);
+
+      // JEQ
       if (*aux == 1)
-        return printf("JEQ\n");
+        return JEQ(cpuCtxPtr, *immediate);
+
       if (*aux == 2)
         return printf("JLT\n");
       if (*aux == 3)
@@ -65,12 +69,15 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
     }
     else
     {
+      // PSH
       if (*aux == 1)
         return PSH(cpuCtxPtr, rn);
 
+      // POP
       if (*aux == 2)
         return POP(cpuCtxPtr, rd);
 
+      // CMP
       if (*aux == 3)
         return CMP(cpuCtxPtr, rm, rn);
     }
