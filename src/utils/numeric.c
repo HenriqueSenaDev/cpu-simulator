@@ -30,7 +30,7 @@ uint8_t *decimalToBinary(uint16_t decimal)
   for (int i = 0; i < 16; i++)
   {
     uint8_t bit = decimal % 2; // 0 or 1
-    binaryArr[i] = bit;
+    binaryArr[15 - i] = bit;
 
     decimal = decimal >> 1;
   }
