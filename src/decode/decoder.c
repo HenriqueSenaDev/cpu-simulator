@@ -20,6 +20,7 @@
 #include "../instructions/cmp/cmp.h"
 #include "../instructions/jmp/jmp.h"
 #include "../instructions/jeq/jeq.h"
+#include "../instructions/jlt/jlt.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -62,25 +63,26 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
       if (*aux == 1)
         return JEQ(cpuCtxPtr, *immediate);
 
+      // JLT
       if (*aux == 2)
-        return printf("JLT\n");
+        return JLT(cpuCtxPtr, *immediate);
+
+      // LGT
       if (*aux == 3)
         return printf("JGT\n");
     }
-    else
-    {
-      // PSH
-      if (*aux == 1)
-        return PSH(cpuCtxPtr, rn);
 
-      // POP
-      if (*aux == 2)
-        return POP(cpuCtxPtr, rd);
+    // PSH
+    if (*aux == 1)
+      return PSH(cpuCtxPtr, rn);
 
-      // CMP
-      if (*aux == 3)
-        return CMP(cpuCtxPtr, rm, rn);
-    }
+    // POP
+    if (*aux == 2)
+      return POP(cpuCtxPtr, rd);
+
+    // CMP
+    if (*aux == 3)
+      return CMP(cpuCtxPtr, rm, rn);
   }
 
   // MOV variations
