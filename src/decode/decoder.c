@@ -21,9 +21,13 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
   uint8_t *opCode = binaryToDecimal(bitsArr, 0, 3);
   uint8_t variation = bitsArr[4];
 
-  // Debugs
-  // printf("OPCODE %d | ", *opCode);
-  // printf("Variation %d | ", variation);
+  uint8_t *rdPtr = binaryToDecimal(bitsArr, 5, 7);
+  uint8_t *rmPtr = binaryToDecimal(bitsArr, 8, 10);
+  uint8_t *rnPtr = binaryToDecimal(bitsArr, 11, 13);
+
+  uint8_t rd = *rdPtr;
+  uint8_t rm = *rmPtr;
+  uint8_t rn = *rnPtr;
 
   if (instruction == 0)
     return NOP(cpuCtxPtr);
@@ -60,26 +64,20 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
   // MOV variations
   if (*opCode == 1)
   {
-    uint8_t *rd = binaryToDecimal(bitsArr, 5, 7);
-
     // MOV Rd = #Im
     if (variation)
     {
       uint8_t *immediate = binaryToDecimal(bitsArr, 8, 15);
-      return MOV_IM(cpuCtxPtr, *rd, *immediate);
+      return MOV_IM(cpuCtxPtr, rd, *immediate);
     }
 
     // MOV Rd = Rm
-    uint8_t *rm = binaryToDecimal(bitsArr, 8, 10);
-    return MOV(cpuCtxPtr, *rd, *rm);
+    return MOV(cpuCtxPtr, rd, rm);
   }
 
   // STR variations
   if (*opCode == 2)
   {
-    uint8_t *rm = binaryToDecimal(bitsArr, 8, 10);
-    uint8_t *rn = binaryToDecimal(bitsArr, 11, 13);
-
     // STR Rm = #Im
     if (variation)
     {
@@ -94,41 +92,24 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
           bitsArr[15]};
 
       uint8_t *immediate = binaryToDecimal(immediateBits, 0, 7);
-      return STR_IM(cpuCtxPtr, *rm, *immediate);
+      return STR_IM(cpuCtxPtr, rm, *immediate);
     }
 
     // STR Rm = Rn
-    return STR(cpuCtxPtr, *rm, *rn);
+    return STR(cpuCtxPtr, rm, rn);
   }
 
   // LDR
-  else if (*opCode == 3)
-  {
-    uint8_t *rd = binaryToDecimal(bitsArr, 5, 7);
-    uint8_t *rm = binaryToDecimal(bitsArr, 8, 10);
-
-    return LDR(cpuCtxPtr, *rd, *rm);
-  }
+  if (*opCode == 3)
+    return LDR(cpuCtxPtr, rd, rm);
 
   // ADD
   else if (*opCode == 4)
-  {
-    uint8_t *rd = binaryToDecimal(bitsArr, 5, 7);
-    uint8_t *rm = binaryToDecimal(bitsArr, 8, 10);
-    uint8_t *rn = binaryToDecimal(bitsArr, 11, 13);
-
-    return ADD(cpuCtxPtr, *rd, *rm, *rn);
-  }
+    return ADD(cpuCtxPtr, rd, rm, rn);
 
   // SUB
   else if (*opCode == 5)
-  {
-    uint8_t *rd = binaryToDecimal(bitsArr, 5, 7);
-    uint8_t *rm = binaryToDecimal(bitsArr, 8, 10);
-    uint8_t *rn = binaryToDecimal(bitsArr, 11, 13);
-
-    return SUB(cpuCtxPtr, *rd, *rm, *rn);
-  }
+    return SUB(cpuCtxPtr, rd, rm, rn);
 
   // MUL
   else if (*opCode == 6)
