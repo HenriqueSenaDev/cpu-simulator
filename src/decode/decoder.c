@@ -14,6 +14,7 @@
 #include "../instructions/and/and.h"
 #include "../instructions/orr/orr.h"
 #include "../instructions/not/not.h"
+#include "../instructions/xor/xor.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -133,7 +134,8 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   // XOR
   else if (*opCode == 10)
-    return printf("XOR\n");
+    return XOR(cpuCtxPtr, rd, rm, rn);
+
   // SHR
   else if (*opCode == 11)
     return printf("SHR\n");
