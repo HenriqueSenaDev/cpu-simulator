@@ -18,6 +18,7 @@
 #include "../instructions/psh/psh.h"
 #include "../instructions/pop/pop.h"
 #include "../instructions/cmp/cmp.h"
+#include "../instructions/jmp/jmp.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -50,7 +51,11 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
     if (variation)
     {
       if (*aux == 0)
-        return printf("JMP\n");
+      {
+        uint16_t *immediate = binaryToDecimal(bitsArr, 5, 13);
+        return JMP(cpuCtxPtr, *immediate);
+      }
+
       if (*aux == 1)
         return printf("JEQ\n");
       if (*aux == 2)
