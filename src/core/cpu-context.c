@@ -70,6 +70,30 @@ uint8_t *nextInstructionBits(CPUContext *cpuCtxPtr)
     return instructionBits;
 }
 
+uint16_t *extractIntFromInstruction(uint8_t *instructionBits, int from, int to)
+{
+    uint16_t *extracted = (uint16_t *)calloc(1, sizeof(uint16_t));
+    int digitsCount = 0;
+
+    if (extracted == NULL)
+    {
+        perror("Error on alocate memory for extract int.");
+        exit(1);
+    }
+
+    for (int i = to; i >= from; i--)
+    {
+        if (instructionBits[i])
+        {
+            *extracted += pow(2, digitsCount);
+        }
+
+        digitsCount++;
+    }
+
+    return extracted;
+}
+
 void startExecution(CPUContext *cpuCtxPtr)
 {
     printf("------- Start Execution -------\n");
@@ -78,18 +102,15 @@ void startExecution(CPUContext *cpuCtxPtr)
     {
         uint8_t *instructionBits = nextInstructionBits(cpuCtxPtr);
 
-        printf("Istr: ");
+        uint16_t *ir = extractIntFromInstruction(instructionBits, 0, 15);
 
-        for (int i = 0; i < 16; i++)
-        {
-            printf("%d", instructionBits[i]);
-            if (i == 7)
-                printf(" ");
-        }
+        // Print instruction bits
+        // printf("Instruction bits: ");
+        // for (int i = 0; i < 16; i++)
+        //     printf("%d", instructionBits[i]);
+        // printf("\n");
 
-        printf("\n");
-
-        // Todo: place value on IR.
+        cpuCtxPtr->ir = *ir;
         cpuCtxPtr->pc += 2;
     }
 
