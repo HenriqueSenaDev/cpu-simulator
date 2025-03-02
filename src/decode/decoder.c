@@ -25,6 +25,7 @@
 #include "../instructions/shr/shr.h"
 #include "../instructions/shl/shl.h"
 #include "../instructions/ror/ror.h"
+#include "../instructions/rol/rol.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -179,7 +180,7 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   // ROL
   else if (*opCode == 14)
-    return printf("ROL\n");
+    return ROL(cpuCtxPtr, rd, rm);
 
   printf("Unmapped instruction.\n");
 }
