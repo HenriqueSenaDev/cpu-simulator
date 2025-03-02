@@ -6,13 +6,15 @@ CFLAGS = -Wall -Wextra -std=c11 # Compiler flags
 # SRC := $(wildcard *.c)
 SRC := $(shell find src -type f -name "*.c")
 
-$(info $(SRC))
+# Print source files
+# $(info $(SRC))
 
 # Build
 BUILD_DIR = ./build
 OBJ = $(SRC:%.c=$(BUILD_DIR)/%.o) # Compiled files generated in BUILD_DIR
 
-$(info $(OBJ))
+# Print object files
+# $(info $(OBJ))
 
 # Output
 OUTPUT_DIR = ./output
