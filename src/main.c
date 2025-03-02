@@ -15,7 +15,6 @@ int main()
     CPUContext *cpuCtx = initCPU();
     popular_memoria_programa(cpuCtx, readLines, linesQuantity);
     liberar_linhas_lidas(readLines, linesQuantity);
-    printProgramMem(cpuCtx);
 
     // Instructions execution.
     startExecution(cpuCtx);

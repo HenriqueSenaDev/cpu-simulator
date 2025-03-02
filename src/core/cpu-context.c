@@ -74,6 +74,8 @@ uint16_t *mountNextInstruction(CPUContext *cpuCtxPtr)
 
 void startExecution(CPUContext *cpuCtxPtr)
 {
+    printProgramMem(cpuCtxPtr);
+
     printf("------- Start Execution -------\n");
 
     while (cpuCtxPtr->usedProgramMem[cpuCtxPtr->pc])
