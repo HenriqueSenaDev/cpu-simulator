@@ -3,5 +3,6 @@
 #define NUMERIC_UTILS
 
 uint16_t *binaryToDecimal(uint8_t *instructionBits, int from, int to);
+uint8_t *decimalToBinary(uint16_t decimal);
 
-#endif NUMERIC_UTILS
+#endif

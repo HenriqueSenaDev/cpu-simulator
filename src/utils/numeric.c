@@ -22,3 +22,18 @@ uint16_t *binaryToDecimal(uint8_t *bits, int from, int to)
 
   return decimal;
 }
+
+uint8_t *decimalToBinary(uint16_t decimal)
+{
+  uint8_t *binaryArr = (uint8_t *)calloc(16, sizeof(uint8_t));
+
+  for (int i = 0; i < 16; i++)
+  {
+    uint8_t bit = decimal % 2; // 0 or 1
+    binaryArr[i] = bit;
+
+    decimal = decimal >> 1;
+  }
+
+  return binaryArr;
+}
