@@ -10,6 +10,7 @@
 #include "../instructions/ldr/ldr.h"
 #include "../instructions/add/add.h"
 #include "../instructions/sub/sub.h"
+#include "../instructions/mul/mul.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -113,7 +114,8 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   // MUL
   else if (*opCode == 6)
-    return printf("MUL\n");
+    return MUL(cpuCtxPtr, rd, rm, rn);
+
   // AND
   else if (*opCode == 7)
     return printf("AND\n");
