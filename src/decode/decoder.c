@@ -5,6 +5,7 @@
 #include "../utils/numeric.h"
 #include "../instructions/nop/nop.h"
 #include "../instructions/halt/halt.h"
+#include "../instructions/mov/mov.h"
 
 // Receives 16 bits array
 void decodeAndExecute(CPUContext *cpuCtxPtr)
@@ -48,15 +49,23 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
         return printf("CMP\n");
     }
   }
-  // MOV
+  // MOV variations
   else if (*opCode == 1)
   {
+    uint8_t *rd = binaryToDecimal(bitsArr, 5, 7);
+
+    // MOV Rd = #Im
     if (variation)
-      return printf("MOV Rd = #Im\n");
-    else
-      return printf("MOV Rd = Rm\n");
+    {
+      uint8_t *immediate = binaryToDecimal(bitsArr, 8, 15);
+      return MOV_IM(cpuCtxPtr, *rd, *immediate);
+    }
+
+    // MOV Rd = Rm
+    uint8_t *rm = binaryToDecimal(bitsArr, 8, 10);
+    return MOV(cpuCtxPtr, *rd, *rm);
   }
-  // STR
+  // STR variations
   else if (*opCode == 2)
   {
     if (variation)
