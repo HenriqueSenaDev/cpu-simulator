@@ -38,9 +38,7 @@ CPUContext *initCPU();
 
 void printProgramMem(CPUContext *cpuCtx);
 
-uint8_t *nextInstructionBits(CPUContext *cpuCtx);
-
-uint16_t *extractIntFromInstruction(uint8_t *instructionBits, int from, int to);
+uint16_t *mountNextInstruction(CPUContext *cpuCtx);
 
 void startExecution(CPUContext *cpuCtx);
 

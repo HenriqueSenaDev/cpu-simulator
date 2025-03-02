@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include "cpu-context.h"
-#include "../decode/decoder.h"
+#include "../utils/numeric.h"
+// #include "../decode/decoder.h"
 
 CPUContext *initCPU()
 {
@@ -42,13 +44,13 @@ void printProgramMem(CPUContext *cpuCtxPtr)
     }
 }
 
-uint8_t *nextInstructionBits(CPUContext *cpuCtxPtr)
+uint16_t *mountNextInstruction(CPUContext *cpuCtxPtr)
 {
     uint8_t *instructionBits = (uint8_t *)calloc(16, sizeof(uint8_t));
 
     if (instructionBits == NULL)
     {
-        perror("Error on alocate memory for instruction.");
+        perror("Error on alocate memory for instruction bits.");
         exit(1);
     }
 
@@ -67,31 +69,7 @@ uint8_t *nextInstructionBits(CPUContext *cpuCtxPtr)
         instructionMsb = instructionMsb >> 1;
     }
 
-    return instructionBits;
-}
-
-uint16_t *extractIntFromInstruction(uint8_t *instructionBits, int from, int to)
-{
-    uint16_t *extracted = (uint16_t *)calloc(1, sizeof(uint16_t));
-    int digitsCount = 0;
-
-    if (extracted == NULL)
-    {
-        perror("Error on alocate memory for extract int.");
-        exit(1);
-    }
-
-    for (int i = to; i >= from; i--)
-    {
-        if (instructionBits[i])
-        {
-            *extracted += pow(2, digitsCount);
-        }
-
-        digitsCount++;
-    }
-
-    return extracted;
+    return binaryToDecimal(instructionBits, 0, 15);
 }
 
 void startExecution(CPUContext *cpuCtxPtr)
@@ -100,18 +78,12 @@ void startExecution(CPUContext *cpuCtxPtr)
 
     while (cpuCtxPtr->usedProgramMem[cpuCtxPtr->pc])
     {
-        uint8_t *instructionBits = nextInstructionBits(cpuCtxPtr);
-
-        uint16_t *ir = extractIntFromInstruction(instructionBits, 0, 15);
-
-        // Print instruction bits
-        // printf("Instruction bits: ");
-        // for (int i = 0; i < 16; i++)
-        //     printf("%d", instructionBits[i]);
-        // printf("\n");
-
-        cpuCtxPtr->ir = *ir;
+        // Search
+        uint16_t *instruction = mountNextInstruction(cpuCtxPtr);
+        cpuCtxPtr->ir = *instruction;
         cpuCtxPtr->pc += 2;
+
+        // decodeAndExecute(cpuCtxPtr);
     }
 
     endExecution(cpuCtxPtr);
