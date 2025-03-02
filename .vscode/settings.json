@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "stdlib.h": "c",
-        "file-reader.h": "c"
+        "file-reader.h": "c",
+        "cpu-context.h": "c"
     }
 }
