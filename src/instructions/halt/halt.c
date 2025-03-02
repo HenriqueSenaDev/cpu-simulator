@@ -5,4 +5,6 @@
 void HALT(CPUContext *cpuCtxPtr)
 {
   printf("HALT\n");
+
+  // TODO
 }

@@ -5,4 +5,6 @@
 void NOP(CPUContext *cpuCtxPtr)
 {
   printf("NOP\n");
+
+  // TODO
 }
