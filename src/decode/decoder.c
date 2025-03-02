@@ -16,6 +16,7 @@
 #include "../instructions/not/not.h"
 #include "../instructions/xor/xor.h"
 #include "../instructions/psh/psh.h"
+#include "../instructions/pop/pop.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -62,7 +63,8 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
         return PSH(cpuCtxPtr, rn);
 
       if (*aux == 2)
-        return printf("POP\n");
+        return POP(cpuCtxPtr, rd);
+
       if (*aux == 3)
         return printf("CMP\n");
     }
