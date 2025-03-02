@@ -11,6 +11,7 @@
 #include "../instructions/add/add.h"
 #include "../instructions/sub/sub.h"
 #include "../instructions/mul/mul.h"
+#include "../instructions/and/and.h"
 
 void decodeAndExecute(CPUContext *cpuCtxPtr)
 {
@@ -118,7 +119,8 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   // AND
   else if (*opCode == 7)
-    return printf("AND\n");
+    return AND(cpuCtxPtr, rd, rm, rn);
+
   // ORR
   else if (*opCode == 8)
     return printf("ORR\n");
