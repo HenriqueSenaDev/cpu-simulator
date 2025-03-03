@@ -56,10 +56,11 @@ char **ler_arquivo(const char *nomearq, int *nlines)
 
     fclose(fp);
 
-    for (int i = 0; i < count; i++)
-    {
-        printf("%s\n", lines[i]);
-    }
+    // Print lines
+    // for (int i = 0; i < count; i++)
+    // {
+    //     printf("%s\n", lines[i]);
+    // }
 
     printf("%d instructions found.\n", count);
 
