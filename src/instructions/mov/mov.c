@@ -4,14 +4,24 @@
 
 void MOV(CPUContext *cpuCtxPtr, uint8_t rd, uint8_t rm)
 {
-  printf("MOV R%d = R%d\n", rd, rm);
+    printf("MOV R%d = R%d\n", rd, rm);
 
-  // TODO
+    // copia o valor de rm pra rd
+    cpuCtxPtr->registers[rd] = cpuCtxPtr->registers[rm];
+
+    // atualiza as flags
+    cpuCtxPtr->zero = (cpuCtxPtr->registers[rd] == 0);
+    cpuCtxPtr->signal = (cpuCtxPtr->registers[rd] & 0x8000) != 0;
 }
 
 void MOV_IM(CPUContext *cpuCtxPtr, uint8_t rd, uint8_t immediate)
 {
-  printf("MOV R%d = #%d\n", rd, immediate);
+    printf("MOV R%d = #%d\n", rd, immediate);
 
-  // TODO
+    // atribui o valor imediato ao registrador rd
+    cpuCtxPtr->registers[rd] = immediate;
+
+    // atualiza os flags
+    cpuCtxPtr->zero = (cpuCtxPtr->registers[rd] == 0);
+    cpuCtxPtr->signal = (cpuCtxPtr->registers[rd] & 0x8000) != 0;
 }

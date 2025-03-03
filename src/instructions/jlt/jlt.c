@@ -4,7 +4,10 @@
 
 void JLT(CPUContext *cpuCtxPtr, uint16_t immediate)
 {
-  printf("JLT %d\n", immediate);
+    printf("JLT %d (PC = PC + %d if Z=0 and C=1)\n", immediate, immediate);
 
-  // TODO
+    if (cpuCtxPtr->zero == 0 && cpuCtxPtr->carry == 1)
+    {
+        cpuCtxPtr->pc += immediate;
+    }
 }

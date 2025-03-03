@@ -4,7 +4,8 @@
 
 void JMP(CPUContext *cpuCtxPtr, uint16_t immediate)
 {
-  printf("JMP %d\n", immediate);
+    printf("JMP %d (PC = PC + %d)\n", immediate, immediate);
 
-  // TODO
+    // atualiza o contador de programa 
+    cpuCtxPtr->pc += immediate;
 }
