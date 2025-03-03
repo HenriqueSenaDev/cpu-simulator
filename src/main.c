@@ -9,7 +9,6 @@ int main()
     // File reading
     int linesQuantity;
     char **readLines = ler_arquivo("./src/test.txt", &linesQuantity);
-    printf("%d instructions found.\n", linesQuantity);
 
     // CPU initialization
     CPUContext *cpuCtx = initCPU();

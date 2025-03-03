@@ -29,16 +29,16 @@ CPUContext *initCPU()
 
 void printProgramMem(CPUContext *cpuCtxPtr)
 {
-    printf("----------- Program Memory -----------\n");
+    printf("> Program Memory\n");
 
-    for (int i = 0; i < MEMORY_RANGE; i++)
+    for (int i = 0; i < MEMORY_RANGE; i = i + 2)
     {
         if (cpuCtxPtr->usedProgramMem[i])
         {
             printf(
-                "Addr[0x%04x]: 0x%02x = %d\n",
+                "Addr[0x%04x]: 0x%02x%02x\n",
                 i,
-                cpuCtxPtr->programMem[i],
+                cpuCtxPtr->programMem[i + 1],
                 cpuCtxPtr->programMem[i]);
         }
     }
@@ -76,7 +76,7 @@ void startExecution(CPUContext *cpuCtxPtr)
 {
     printProgramMem(cpuCtxPtr);
 
-    printf("------- Start Execution -------\n");
+    printf("> Start Execution\n");
 
     while (cpuCtxPtr->usedProgramMem[cpuCtxPtr->pc])
     {
@@ -93,7 +93,7 @@ void startExecution(CPUContext *cpuCtxPtr)
 
 void endExecution(CPUContext *cpuCtxPtr)
 {
-    printf("-------- End Execution --------\n");
+    printf("> End Execution\n");
 
     free(cpuCtxPtr);
     printf("CPU memory freed.\n");
