@@ -44,6 +44,55 @@ void printProgramMem(CPUContext *cpuCtxPtr)
     }
 }
 
+void printState(CPUContext *cpuCtxPtr)
+{
+    int carry = cpuCtxPtr->carry;
+    int overflow = cpuCtxPtr->overflow;
+    int signal = cpuCtxPtr->signal;
+    int zero = cpuCtxPtr->zero;
+
+    printf("---------- CPU State ----------\n");
+    printf("Registers\n");
+
+    // Registers
+    for (int i = 0; i < 8; i++)
+        printf("    R%d: 0x%04x\n", i, cpuCtxPtr->registers[i]);
+
+    printf("    PC: 0x%04x\n", cpuCtxPtr->pc);
+    printf("    SP: 0x%04x\n", cpuCtxPtr->sp);
+
+    // Used data mem
+    printf("Data Memory\n");
+    for (int i = 0; i < MEMORY_RANGE; i = i + 2)
+    {
+        if (cpuCtxPtr->usedDataMem[i])
+            printf(
+                "   [0x%04x]: 0x%02x%02x\n",
+                i,
+                cpuCtxPtr->dataMem[i + 1],
+                cpuCtxPtr->dataMem[i]);
+    }
+
+    // Stack
+    printf("Stack\n");
+    for (int i = 0; i < 8; i++)
+    {
+        uint16_t curAddr = 0x8200 - (2 * i);
+
+        printf(
+            "   [0x%04x]: 0x%02x%02x\n",
+            curAddr,
+            cpuCtxPtr->dataMem[curAddr + 1],
+            cpuCtxPtr->dataMem[curAddr]);
+    }
+
+    // Flags
+    printf("Flags\n");
+    printf("    Ca:%d Ov:%d S:%d Z:%d\n", carry, overflow, signal, zero);
+
+    printf("--------------------------------");
+}
+
 uint16_t *mountNextInstruction(CPUContext *cpuCtxPtr)
 {
     uint8_t *instructionBits = (uint8_t *)calloc(16, sizeof(uint8_t));
@@ -94,10 +143,8 @@ void startExecution(CPUContext *cpuCtxPtr)
 void endExecution(CPUContext *cpuCtxPtr)
 {
     printf("> End Execution\n");
-
     free(cpuCtxPtr);
-    printf("CPU memory freed.\n");
 
-    printf("TODO: print cpu state.\n");
+    printState(cpuCtxPtr);
     exit(0);
 }

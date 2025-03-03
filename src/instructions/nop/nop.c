@@ -5,11 +5,5 @@
 void NOP(CPUContext *cpuCtxPtr)
 {
   printf("NOP\n");
-
-  // nada é feito
-
-
-
+  printState(cpuCtxPtr);
 }
-
-

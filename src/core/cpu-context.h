@@ -38,6 +38,8 @@ CPUContext *initCPU();
 
 void printProgramMem(CPUContext *cpuCtx);
 
+void printState(CPUContext *cpuCtxPtr);
+
 uint16_t *mountNextInstruction(CPUContext *cpuCtx);
 
 void startExecution(CPUContext *cpuCtx);
