@@ -17,7 +17,7 @@ void remove_spaces(char *s)
 
 char **ler_arquivo(const char *nomearq, int *nlines)
 {
-    printf("> Reading file \"./src/test.txt\".\n");
+    printf("> Reading file \"%s\"\n", nomearq);
 
     FILE *fp = fopen(nomearq, "r");
 
