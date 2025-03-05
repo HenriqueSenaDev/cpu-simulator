@@ -7,7 +7,7 @@ void ROL(CPUContext *cpuCtxPtr, uint8_t rd, uint8_t rm)
   printf("ROL R%d = R%d << 1\n", rd, rm);
 
   uint16_t value = cpuCtxPtr->registers[rm];
-  uint8_t msb = value & 0x8000; // 0 or 1
+  uint8_t msb = (uint8_t)(value & 0x8000); // 0 or 1
 
   cpuCtxPtr->registers[rd] = (value << 1) | (msb >> 7);
 }

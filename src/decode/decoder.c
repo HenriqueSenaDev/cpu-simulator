@@ -34,12 +34,12 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
   // Instruction 16 bits.
   uint8_t *bitsArr = decimalToBinary(instruction);
 
-  uint8_t *opCode = binaryToDecimal(bitsArr, 0, 3);
+  uint8_t *opCode = (uint8_t *)binaryToDecimal(bitsArr, 0, 3);
   uint8_t variation = bitsArr[4];
 
-  uint8_t *rdPtr = binaryToDecimal(bitsArr, 5, 7);
-  uint8_t *rmPtr = binaryToDecimal(bitsArr, 8, 10);
-  uint8_t *rnPtr = binaryToDecimal(bitsArr, 11, 13);
+  uint8_t *rdPtr = (uint8_t *)binaryToDecimal(bitsArr, 5, 7);
+  uint8_t *rmPtr = (uint8_t *)binaryToDecimal(bitsArr, 8, 10);
+  uint8_t *rnPtr = (uint8_t *)binaryToDecimal(bitsArr, 11, 13);
 
   uint8_t rd = *rdPtr;
   uint8_t rm = *rmPtr;
@@ -53,7 +53,7 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
 
   if (*opCode == 0)
   {
-    uint8_t *aux = binaryToDecimal(bitsArr, 14, 15);
+    uint8_t *aux = (uint8_t *)binaryToDecimal(bitsArr, 14, 15);
 
     // JUMPS
     if (variation)
@@ -96,7 +96,7 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
     // MOV Rd = #Im
     if (variation)
     {
-      uint8_t *immediate = binaryToDecimal(bitsArr, 8, 15);
+      uint8_t *immediate = (uint8_t *)binaryToDecimal(bitsArr, 8, 15);
       return MOV_IM(cpuCtxPtr, rd, *immediate);
     }
 
@@ -120,7 +120,7 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
           bitsArr[14],
           bitsArr[15]};
 
-      uint8_t *immediate = binaryToDecimal(immediateBits, 0, 7);
+      uint8_t *immediate = (uint8_t *)binaryToDecimal(immediateBits, 0, 7);
       return STR_IM(cpuCtxPtr, rm, *immediate);
     }
 
@@ -163,14 +163,14 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
   // SHR
   else if (*opCode == 11)
   {
-    uint8_t *immediate = binaryToDecimal(bitsArr, 11, 15);
+    uint8_t *immediate = (uint8_t *)binaryToDecimal(bitsArr, 11, 15);
     return SHR(cpuCtxPtr, rd, rm, *immediate);
   }
 
   // SHL
   else if (*opCode == 12)
   {
-    uint8_t *immediate = binaryToDecimal(bitsArr, 11, 15);
+    uint8_t *immediate = (uint8_t *)binaryToDecimal(bitsArr, 11, 15);
     return SHL(cpuCtxPtr, rd, rm, *immediate);
   }
 
