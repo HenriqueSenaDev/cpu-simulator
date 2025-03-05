@@ -12,7 +12,7 @@ void remove_spaces(char *s)
         {
             ++d;
         }
-    } while (*s++ = *d++);
+    } while ((*s++ = *d++));
 }
 
 char **ler_arquivo(const char *nomearq, int *nlines)
