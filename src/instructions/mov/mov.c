@@ -8,10 +8,6 @@ void MOV(CPUContext *cpuCtxPtr, uint8_t rd, uint8_t rm)
 
     // copia o valor de rm pra rd
     cpuCtxPtr->registers[rd] = cpuCtxPtr->registers[rm];
-
-    // atualiza as flags
-    cpuCtxPtr->zero = (cpuCtxPtr->registers[rd] == 0);
-    cpuCtxPtr->signal = (cpuCtxPtr->registers[rd] & 0x8000) != 0;
 }
 
 void MOV_IM(CPUContext *cpuCtxPtr, uint8_t rd, uint8_t immediate)
@@ -20,8 +16,4 @@ void MOV_IM(CPUContext *cpuCtxPtr, uint8_t rd, uint8_t immediate)
 
     // atribui o valor imediato ao registrador rd
     cpuCtxPtr->registers[rd] = immediate;
-
-    // atualiza os flags
-    cpuCtxPtr->zero = (cpuCtxPtr->registers[rd] == 0);
-    cpuCtxPtr->signal = (cpuCtxPtr->registers[rd] & 0x8000) != 0;
 }

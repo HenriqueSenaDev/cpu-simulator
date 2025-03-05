@@ -90,7 +90,7 @@ void printState(CPUContext *cpuCtxPtr)
     printf("Flags\n");
     printf("    Ca:%d Ov:%d S:%d Z:%d\n", carry, overflow, signal, zero);
 
-    printf("--------------------------------");
+    printf("--------------------------------\n");
 }
 
 uint16_t *mountNextInstruction(CPUContext *cpuCtxPtr)
