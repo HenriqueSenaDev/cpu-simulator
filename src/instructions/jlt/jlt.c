@@ -4,10 +4,15 @@
 
 void JLT(CPUContext *cpuCtxPtr, uint16_t immediate)
 {
-    printf("JLT %d (PC = PC + %d if Z=0 and C=1)\n", immediate, immediate);
+    // Imediato em complemento 2.
+    int16_t offset = (immediate & 0x100)
+                         ? immediate | ~0x1FF
+                         : immediate;
+
+    printf("JLT 0x%03x (PC += %d  if Z=0 and C=1)\n", immediate, offset);
 
     if (cpuCtxPtr->zero == 0 && cpuCtxPtr->carry == 1)
     {
-        cpuCtxPtr->pc += immediate;
+        cpuCtxPtr->pc += offset;
     }
 }
