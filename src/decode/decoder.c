@@ -183,4 +183,5 @@ void decodeAndExecute(CPUContext *cpuCtxPtr)
     return ROL(cpuCtxPtr, rd, rm);
 
   printf("Unmapped instruction.\n");
+  endExecution(cpuCtxPtr);
 }
