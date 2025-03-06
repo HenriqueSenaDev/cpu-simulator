@@ -3,6 +3,6 @@
 
 void HALT(CPUContext *cpuCtxPtr)
 {
-    printf("HALT - Parando a execução da CPU\n");
-    endExecution(cpuCtxPtr); 
+    printf("HALT\n");
+    endExecution(cpuCtxPtr);
 }

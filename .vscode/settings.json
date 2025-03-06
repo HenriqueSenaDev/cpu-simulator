@@ -7,6 +7,7 @@
         "file-reader.h": "c",
         "cpu-context.h": "c",
         "stdio.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "numeric.h": "c"
     }
 }
