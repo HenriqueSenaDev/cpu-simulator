@@ -26,7 +26,7 @@ all: build
 # Rule "build" depends on compiled files in $(OBJ).
 # Generates $(TARGET) executable if files in $(OBJ) are compiled.
 build: create-dirs $(OBJ)
-	$(CC) $(OBJ) -o $(TARGET)
+	$(CC) $(OBJ) -o $(TARGET) -lm
 
 # Creates $(BUILD_DIR) $(OUTPUT_DIR) directories.
 create-dirs:
